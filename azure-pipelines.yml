@@ -30,6 +30,11 @@ stages:
           - task: Npm@1
             displayName: NPM CI
             inputs:
+              command: 'ci'
+              workingDir: '$(Pipeline.Workspace)/client'
+          - task: Npm@1
+            displayName: NPM Build
+            inputs:
               command: 'custom'
               customCommand: 'run build'
               workingDir: '$(Pipeline.Workspace)/client'

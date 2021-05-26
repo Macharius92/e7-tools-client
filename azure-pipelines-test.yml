@@ -20,7 +20,7 @@ stages:
       - job: Client
         steps:
           - checkout: self
-            path: client
+            path: clienttest
           - task: NodeTool@0
             displayName: Ensure Node 15
             inputs:
@@ -29,6 +29,11 @@ stages:
               checkLatest: true # Optional
           - task: Npm@1
             displayName: NPM CI
+            inputs:
+              command: 'ci'
+              workingDir: '$(Pipeline.Workspace)/clienttest'
+          - task: Npm@1
+            displayName: NPM Build
             inputs:
               command: 'custom'
               customCommand: 'run build'
