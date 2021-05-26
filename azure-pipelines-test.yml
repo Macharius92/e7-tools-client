@@ -68,7 +68,6 @@ stages:
                     inputs:
                       targetType: 'inline'
                       script: |
-                        Rename-Item $(Pipeline.Workspace)/build $(Pipeline.Workspace)/clienttest
                         cp -Force -Recurse -Path $(Pipeline.Workspace)/clienttest -Destination ${env:DESTFOLDER}
                     env:
                       DestFolder: $(DestFolder)
