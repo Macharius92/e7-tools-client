@@ -5,7 +5,7 @@ import ResponsiveDrawer from './components/responsivedrawer';
 import Signedin from './components/signedin';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import ToolBar from '@material-ui/core/ToolBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,7 +34,7 @@ const classes = useStyles();
         <HeaderMui handleDrawer={handleDrawerToggle} mobileDrawerOpen={mobileDrawerOpen} />
         <ResponsiveDrawer handleDrawer={handleDrawerToggle} mobileDrawerOpen={mobileDrawerOpen} />
         <main className={classes.content}>
-          <ToolBar />
+          <Toolbar />
           <Switch>
               <Route path="/signedin">
                 <Signedin></Signedin>
