@@ -1,0 +1,69 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+# Inspired with the help of https://technology.amis.nl/continuous-delivery/deploy-angular-and-node-js-webapp-in-azure-pipelines-part-5/
+
+trigger:
+  branches:
+    include:
+    - develop
+    exclude:
+    - main
+
+pool: Default
+  #vmImage: ubuntu-latest
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Client
+        steps:
+          - checkout: self
+            path: client
+          - task: NodeTool@0
+            displayName: Ensure Node 15
+            inputs:
+              versionSpec: '15.x' 
+              #force32bit: false # Optional
+              checkLatest: true # Optional
+          - task: Npm@1
+            displayName: NPM CI
+            inputs:
+              command: 'custom'
+              customCommand: 'run build'
+              workingDir: '$(Pipeline.Workspace)/clienttest'
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Artifact in Pipeline
+            inputs:
+              targetPath: '$(Pipeline.Workspace)/clienttest/build'
+              artifact: 'clienttest'
+              publishLocation: 'pipeline'
+  - stage: deployProduction
+    displayName: Deploy Production
+    dependsOn:
+    - Build
+    jobs:
+      - deployment: VMDeploy_Production
+        displayName: Deploy Test
+        environment:
+          name: Test
+          resourceType: VirtualMachine
+        variables:
+          group: Test
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                  - download: current
+                    displayName: Download Client
+                    artifact: 'clienttest'
+                  - task: PowerShell@2
+                    displayName: Client Deploy
+                    inputs:
+                      targetType: 'inline'
+                      script: |
+                        Rename-Item $(Pipeline.Workspace)/build $(Pipeline.Workspace)/clienttest
+                        cp -Force -Recurse -Path $(Pipeline.Workspace)/clienttest -Destination ${env:DESTFOLDER}
+                    env:
+                      DestFolder: $(DestFolder)
