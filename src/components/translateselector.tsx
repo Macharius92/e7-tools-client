@@ -2,11 +2,11 @@ import React, { FunctionComponent, Fragment, useState, MouseEvent } from 'react'
 import { Menu, MenuItem, Button } from '@material-ui/core';
 import TranslateIcon from '@material-ui/icons/Translate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const options = ['English', 'Français'];
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     menuButton: {
         marginRight: theme.spacing(1),
         [theme.breakpoints.up('sm')]: {
