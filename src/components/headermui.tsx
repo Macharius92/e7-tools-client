@@ -119,7 +119,7 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
         AuthButton = () => {
             return (
                 <nav aria-label="connect" >
-                    <Hidden  implementation="css">
+                    <Hidden xsDown implementation="css">
                         <Button variant="contained" color="inherit" href="/auth/logout"
                             className={`${classes.btn_discord} ${classes.menuButton}`} startIcon={<Avatar src={userImage} />}>Logout
                         </Button>
