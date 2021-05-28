@@ -1,5 +1,5 @@
 import React, { FunctionComponent, Fragment, useState, MouseEvent } from 'react';
-import { Menu, MenuItem, Button } from '@material-ui/core';
+import { Menu, MenuItem, Button, Hidden } from '@material-ui/core';
 import TranslateIcon from '@material-ui/icons/Translate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -49,9 +49,13 @@ const TranslateSelector: FunctionComponent = () => {
                 color="inherit"
                 className={classes.menuButton}
                 //size={ButtonSize}
-                startIcon={<TranslateIcon /*fontSize={IconSize}*/ />}
-                endIcon={<ExpandMoreIcon />}>
-                    {options[selectedIndex]}
+                //startIcon={<TranslateIcon /*fontSize={IconSize}*/ />}
+                /*endIcon={<ExpandMoreIcon />}*/>
+                    <TranslateIcon />
+                    <Hidden xsDown implementation="css">
+                        &nbsp; {options[selectedIndex]}
+                    </Hidden>
+                    <ExpandMoreIcon />
             </Button>
             <Menu
                 id="menu-appbar"

@@ -68,6 +68,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     btn_discord: {
         background: '#7289da !important',
         border: '#7289da !important',
+    },
+    small: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
     }
 }));
 
@@ -99,9 +103,14 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
         setAnchorEl(null);
     };
 
+    const handleLogin = () => {
+        //history.push("/auth/discord");
+        window.location.href = "/auth/discord";
+    }
+
     //const IconSize = mobileDrawerOpen ? "small" : "default";
     const ButtonSize = mobileDrawerOpen ? "small" : "medium";
-    const SwitchSize = mobileDrawerOpen ? "small" : undefined;
+    //const SwitchSize = mobileDrawerOpen ? "small" : undefined;
     //const DiscordSize = mobileOpen ? "small" : 1;
 
     let AuthButton;
@@ -110,23 +119,17 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
         AuthButton = () => {
             return (
                 <nav aria-label="connect" >
-                    <Hidden xsDown implementation="css">
+                    <Hidden  implementation="css">
                         <Button variant="contained" color="inherit" href="/auth/logout"
                             className={`${classes.btn_discord} ${classes.menuButton}`} startIcon={<Avatar src={userImage} />}>Logout
                         </Button>
                     </Hidden>
                     <Hidden smUp implementation="css">
                         <IconButton edge="start" size="small" className={`${classes.btn_discord} ${classes.menuButton}`} color="inherit" aria-label="connect" href="/auth/logout">
-                            <Avatar src={userImage} />
+                            <Avatar src={userImage} className={classes.small} />
                         </IconButton>
                     </Hidden>
                 </nav>
-                /* <Button variant="contained" color="inherit" href="/auth/logout"
-                    className={`${classes.btn_discord} ${classes.menuButton}`} startIcon={<Icon path={mdiDiscord}
-                        title="Discord"
-                        size={1} />}>
-                    Logout
-                </Button> */
             );
         }
     }
@@ -146,7 +149,7 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
                             <Icon path={mdiDiscord}
                                 title="Discord"
                                 size={1} />
-                        </IconButton> */}
+                        </IconButton> 
                         <Button
                             onClick={(event) => handleMenu(event)}
                             aria-owns={open ? 'menu-login' : undefined}
@@ -156,7 +159,14 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
                             size="small"
                             endIcon={<Discord
                                 fontSize="inherit" />}>
-                        </Button>
+                        </Button>*/}
+                        <IconButton edge="start" size="small" className={`${classes.btn_discord} ${classes.menuButton}`} color="inherit" aria-label="connect" onClick={(event) => handleMenu(event)} aria-owns={open ? 'menu-login' : undefined}
+                            aria-haspopup="true">
+                            <Avatar className={`${classes.btn_discord} ${classes.small}`}>
+                                <Discord color="inherit"
+                                fontSize="inherit" />
+                            </Avatar>
+                        </IconButton>
                         <Menu
                             id="menu-login"
                             anchorEl={anchorEl}
@@ -166,10 +176,8 @@ const HeaderMui: FunctionComponent<Props> = (props:Props) => {
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem
-                                /*onClick={(event) => handleSelectItem(event, index)}*/
-                            >
-                                Login with Discord
+                            <MenuItem button={true} onClick={handleLogin}>
+                                Login to Discord
                             </MenuItem>
                         </Menu>
                     </Hidden>
